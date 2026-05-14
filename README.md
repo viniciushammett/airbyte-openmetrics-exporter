@@ -81,9 +81,6 @@ See [docs/metrics.md](docs/metrics.md) for the full list.
 ## Quick start with Docker
 
 ```bash
-cp env.example .env
-# Edit .env with your Airbyte PostgreSQL connection details.
-
 docker build -t airbyte-openmetrics-exporter:v0.1.0 .
 docker run --rm --env-file .env -p 8000:8000 airbyte-openmetrics-exporter:v0.1.0
 ```
@@ -199,4 +196,6 @@ Do not include credentials, internal hostnames, customer data, or private connec
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. 
+
+See [LICENSE](LICENSE).
