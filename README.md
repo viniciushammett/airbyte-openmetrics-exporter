@@ -1,6 +1,18 @@
-# airbyte-openmetrics-exporter
+# 📡 airbyte-openmetrics-exporter
 
-A lightweight OpenMetrics exporter for Airbyte OSS operational visibility.
+<p align="left">
+  <img alt="Airbyte OSS" src="https://img.shields.io/badge/Airbyte-OSS-615EFF">
+  <img alt="OpenMetrics" src="https://img.shields.io/badge/OpenMetrics-compatible-00A86B">
+  <img alt="Prometheus" src="https://img.shields.io/badge/Prometheus-ready-E6522C?logo=prometheus&logoColor=white">
+  <img alt="Grafana" src="https://img.shields.io/badge/Grafana-friendly-F46800?logo=grafana&logoColor=white">
+  <img alt="Datadog" src="https://img.shields.io/badge/Datadog-compatible-632CA6?logo=datadog&logoColor=white">
+  <img alt="Kubernetes" src="https://img.shields.io/badge/Kubernetes-native-326CE5?logo=kubernetes&logoColor=white">
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-2E8B57">
+</p>
+
+> A lightweight OpenMetrics exporter for Airbyte OSS operational visibility.
 
 This project exposes Airbyte sync and connection metrics from the Airbyte PostgreSQL metadata database through a `/metrics` endpoint compatible with Prometheus/OpenMetrics.
 
