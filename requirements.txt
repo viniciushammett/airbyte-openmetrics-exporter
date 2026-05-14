@@ -1,0 +1,4 @@
+prometheus-client==0.21.1
+psycopg2-binary==2.9.10
+pydantic==2.10.4
+pydantic-settings==2.7.1

@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airbyte-openmetrics-exporter
+  namespace: airbyte
+  labels:
+    app.kubernetes.io/name: airbyte-openmetrics-exporter
+    app.kubernetes.io/component: metrics-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: airbyte-openmetrics-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: airbyte-openmetrics-exporter
+        app.kubernetes.io/component: metrics-exporter
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: exporter
+          image: ghcr.io/example/airbyte-openmetrics-exporter:v0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: metrics
+              containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: airbyte-openmetrics-exporter-db
+          env:
+            - name: EXPORTER_PORT
+              value: "8000"
+            - name: METRICS_PREFIX
+              value: airbyte
+            - name: QUERY_TIMEOUT_SECONDS
+              value: "10"
+            - name: SCRAPE_CACHE_TTL_SECONDS
+              value: "30"
+            - name: LOG_LEVEL
+              value: INFO
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: metrics
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            medium: Memory

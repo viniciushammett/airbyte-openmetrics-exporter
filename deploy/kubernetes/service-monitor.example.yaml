@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: airbyte-openmetrics-exporter
+  namespace: airbyte
+  labels:
+    app.kubernetes.io/name: airbyte-openmetrics-exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: airbyte-openmetrics-exporter
+  namespaceSelector:
+    matchNames:
+      - airbyte
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s

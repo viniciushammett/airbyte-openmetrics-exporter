@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airbyte-openmetrics-exporter
+  namespace: airbyte
+spec:
+  template:
+    metadata:
+      annotations:
+        ad.datadoghq.com/exporter.checks: |
+          {
+            "openmetrics": {
+              "init_config": {},
+              "instances": [
+                {
+                  "openmetrics_endpoint": "http://%%host%%:8000/metrics",
+                  "namespace": "airbyte_custom",
+                  "metrics": [".*"]
+                }
+              ]
+            }
+          }

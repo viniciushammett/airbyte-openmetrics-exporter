@@ -1,0 +1,19 @@
+services:
+  exporter:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      AIRBYTE_DB_HOST: postgres.example.internal
+      AIRBYTE_DB_PORT: "5432"
+      AIRBYTE_DB_NAME: airbyte
+      AIRBYTE_DB_USER: airbyte
+      AIRBYTE_DB_PASSWORD: change-me
+      AIRBYTE_DB_SSLMODE: prefer
+      EXPORTER_PORT: "8000"
+      METRICS_PREFIX: airbyte
+      QUERY_TIMEOUT_SECONDS: "10"
+      SCRAPE_CACHE_TTL_SECONDS: "30"
+      LOG_LEVEL: INFO
